@@ -7,7 +7,7 @@ public class EnglishDictionary extends Dictionary{
 	
 
 	@Override
-	public String loadDictionary() {
+	public void loadDictionary() {
 
 		
 		try {
@@ -17,17 +17,12 @@ public class EnglishDictionary extends Dictionary{
 		while((word=br.readLine())!=null){
 			this.aggiungiParola(new RichWord(word.toLowerCase(),true));
 			
-			
-		// Aggiungere word alla struttura dati
 		}
 		br.close();
 		} 
 		catch(IOException e){
 		System.out.println("Errore nella lettura del file");}
 		
-		
-		
-		return super.loadDictionary();
 	}
 	
 	
