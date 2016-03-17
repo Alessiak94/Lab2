@@ -9,13 +9,29 @@ public class TestModel {
 		Dictionary d= new ItalianDictionary();
 		
 		List<String> lista =new LinkedList<String>();
+		lista.add("aaads");
 		lista.add("abbagliare");
 		lista.add("abbaliare");
+		lista.add("acassdsdsa");
+		lista.add("aciaone");
+		lista.add("acronimo");
+		lista.add("ammoree");
+		lista.add("asticela");
 		lista.add("ciao");
+		lista.add("cuore");
+		lista.add("fiore");
 		lista.add("hola");
-		lista.add("casa");
-		d.loadDictionary();
-		System.out.println("---"+3/2);
+		lista.add("malol");
+		lista.add("sole");
+	//	d.loadDictionary();
+		
+		d.aggiungiParola(new RichWord("ciao",true));
+		d.aggiungiParola(new RichWord("cuore",true));
+		d.aggiungiParola(new RichWord("fiore",true));
+		d.aggiungiParola(new RichWord("hola",true));
+		d.aggiungiParola(new RichWord("malol",true));
+		d.aggiungiParola(new RichWord("sole",true));
+		
 		System.out.println(d.ricercaDicotomica(lista));
 	}
 

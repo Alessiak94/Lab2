@@ -14,50 +14,33 @@ public class Dictionary {
 	
 	
 	public List<RichWord> ricercaDicotomica(List<String> input){
-		List<RichWord> l= new LinkedList<RichWord>();
-
-		List<RichWord> temp=lista;
-		Collections.sort(temp, new ComparatoreParole());
+		List<RichWord> l=new LinkedList<RichWord>();
 		
-		for(int i =0;i<input.size();i++){
-
-			
-			int numero=temp.size()/2;
-			int inf=0;
-			int sup=temp.size();
-			while(numero!=0&&numero!=1&&numero!=temp.size()-1&&numero!=temp.size()){
-				/*System.out.println("Gradezza Lista: "+temp.size());
-				System.out.println("Numero: "+numero);
-				System.out.println("inferiore: "+inf+" Superiore: "+sup);
-				*/
-				if(temp.get(numero).getParola().compareTo(input.get(i).toLowerCase())==0)
-					{
-					//System.out.println("Trovata");
-					numero=0;}
-				else if(temp.get(numero).getParola().compareTo(input.get(i))<0){
-				
-					//System.out.println("Minore");
-					sup=numero;
-					numero=inf+(sup-inf)/2;
-					
-				}
-				else {
-					//System.out.println("Maggiore");
-					inf=(numero);
-					 numero=(inf+(sup-inf)/2);
-					 
-				}
+		
+		for(int i=0;i<input.size();i++){//System.out.println("Cerca: "+input.get(i));
+		boolean a=false;
+		int inizio=0;
+		int fine= lista.size()-1;
+		int centro=0;
+		while(inizio<=fine){
+			centro=(inizio+fine)/2;// System.out.println("inizio: "+inizio+" fine: "+fine+" centro: "+centro);
+			if(lista.get(centro).getParola().compareTo(input.get(i).toLowerCase())>0)
+				fine= centro-1;
+			else if(lista.get(centro).getParola().compareTo(input.get(i).toLowerCase())<0)
+				inizio=centro+1;
+			else {//System.out.println("TROVATA");
+				a=true;
+				break;
 			}
+		
+		}
+		if(a==false)
+			l.add(new RichWord(input.get(i).toLowerCase(),false));
 		}
 		
 		
-		
 		return l;
-	}
-	
-	
-	
-	
+	}	
 	
 	
 	public List<RichWord> spellCheckText(List<String> inputTextList){

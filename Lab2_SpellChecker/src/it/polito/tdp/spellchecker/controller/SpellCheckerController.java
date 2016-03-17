@@ -53,42 +53,32 @@ public class SpellCheckerController {
     @FXML
     void doSpellCheck(ActionEvent event) {
     	long inizio=System.currentTimeMillis();
-    	
-    	
     	txtCorrezione.clear();
-    	if(cmbLingua.getValue().compareTo("Italiano")==0){
-    		model= new ItalianDictionary();
-    		model.loadDictionary();
-    		txtCorrezione.setText(confrontaTesto(txtTesto.getText().toLowerCase()).toString());
-    		if(txtCorrezione.getText().length()!=0)
-    			lblErrori.setText("Il testo contiene errori!");
-    		else lblErrori.setText("Testo scritto correttamente!");
-    		long fine=System.currentTimeMillis();
-    		double tempo=(fine-inizio)*0.0001;
-    		lblTempo.setText("Testo controllato in "+tempo+" s");
-    	}
-    	else if(cmbLingua.getValue().compareTo("English")==0){
-    		model= new EnglishDictionary();
-    		model.loadDictionary();
-    		txtCorrezione.setText(confrontaTesto(txtTesto.getText().toLowerCase()).toString());
-    		if(txtCorrezione.getText().length()!=0)
-    			lblErrori.setText("Your text contains errors!");
-    		else lblErrori.setText("Your text is correct!");
-    		long fine=System.currentTimeMillis();
-    		double tempo=(fine-inizio)*0.0001;
-    		lblTempo.setText("Spell check completed in "+tempo+" s");
-    	}
-    	else txtCorrezione.setText("Scegliere lingua dizionario");
-    	
+    	selezionaDizionario();
+    	txtCorrezione.setText(confrontaTesto(txtTesto.getText().toLowerCase()).toString());
+		if(txtCorrezione.getText().length()!=0)
+			lblErrori.setText("Il testo contiene errori!");
+		else lblErrori.setText("Testo scritto correttamente!");
+		long fine=System.currentTimeMillis();
+		double tempo=(fine-inizio)*0.0001;
+		lblTempo.setText("Testo controllato in "+tempo+" s");
 
+    }
+    public void selezionaDizionario(){
+    	if(cmbLingua.getValue().compareTo("Italiano")==0)
+    		model=new ItalianDictionary();
+    	if(cmbLingua.getValue().compareTo("English")==0)
+    		model=new EnglishDictionary();
+    	model.loadDictionary();
     }
     
     public List<RichWord> confrontaTesto(String testo){
     	List<String> lista= new LinkedList<String>();
-    	String[] a=testo.split(" ");
+    	String txt=testo.replaceAll("\n", " ");
+    	String[] a=txt.split(" ");
     	for(int i=0;i<a.length;i++)
     	  lista.add(a[i]);
-    	return model.spellCheckText(lista);
+    	return model.ricercaDicotomica(lista);
     	
     }
     
